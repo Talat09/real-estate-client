@@ -1,51 +1,54 @@
 /* Base styling */
 .navbar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    padding: 0 20px;
-  }
-  
-  .logo {
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .navbar-menu {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-  }
-  
-  .navbar-menu .ant-menu-item {
-    color: rgb(44, 44, 44);
-    font-size: 16px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 20px;
+ 
+ 
+
+}
+
+.logo {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-menu {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar-menu .ant-menu-item {
+  color: rgb(44, 44, 44);
+  font-size: 16px;
+}
+
+.login-button {
+  margin-left: auto;
+}
+
+/* Responsive styling */
+.menu-icon {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-menu,
   .login-button {
-    margin-left: auto;
-  }
-  
-  /* Responsive styling */
-  .menu-icon {
     display: none;
   }
-  
-  @media (max-width: 768px) {
-    .navbar-menu, .login-button {
-      display: none;
-    }
-  
-    .menu-icon {
-      display: inline-block;
-    }
+
+  .menu-icon {
+    display: inline-block;
   }
-  
-  /* Drawer button styling */
-  .drawer-login-button {
-    margin-top: 10px;
-    width: 100%;
-  }
-  
+}
+
+/* Drawer button styling */
+.drawer-login-button {
+  margin-top: 10px;
+  width: 100%;
+}

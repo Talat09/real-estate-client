@@ -20,9 +20,9 @@ const TopHeader = () => {
   return (
     <Header className="navbar-header">
       <div className="logo">
-        Real<span style={{ color: "blue" }}>Estate</span>
+        Real<span style={{ color: "red" }}>Estate</span>
       </div>
-      
+
       <Menu mode="horizontal" className="navbar-menu">
         <Menu.Item key="home">
           <Link to="/">Home</Link>
@@ -53,22 +53,34 @@ const TopHeader = () => {
         title="Menu"
         placement="right"
         onClose={onClose}
-        visible={drawerVisible}
+        open={drawerVisible}
       >
         <Menu mode="vertical">
           <Menu.Item key="home">
-            <Link to="/" onClick={onClose}>Home</Link>
+            <Link to="/" onClick={onClose}>
+              Home
+            </Link>
           </Menu.Item>
           <Menu.Item key="about">
-            <Link to="/about" onClick={onClose}>About</Link>
+            <Link to="/about" onClick={onClose}>
+              About
+            </Link>
           </Menu.Item>
           <Menu.Item key="contact">
-            <Link to="/contact" onClick={onClose}>Contact</Link>
+            <Link to="/contact" onClick={onClose}>
+              Contact
+            </Link>
           </Menu.Item>
           <Menu.Item key="agents">
-            <Link to="/agents" onClick={onClose}>Agents</Link>
+            <Link to="/agents" onClick={onClose}>
+              Agents
+            </Link>
           </Menu.Item>
-          <Button type="primary" className="drawer-login-button" onClick={onClose}>
+          <Button
+            type="primary"
+            className="drawer-login-button"
+            onClick={onClose}
+          >
             Login
           </Button>
         </Menu>
