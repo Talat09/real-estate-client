@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { MenuOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import "./Header.css";
+import { useAuth } from "../../context/AuthProvider";
 
 const { Header } = Layout;
 
 const TopHeader = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
-
+  const { isAuthenticated } = useAuth();
+  // const navigate = useNavigate();
   const showDrawer = () => {
     setDrawerVisible(true);
   };
@@ -20,7 +22,9 @@ const TopHeader = () => {
   return (
     <Header className="navbar-header">
       <div className="logo">
-        Real<span style={{ color: "red" }}>Estate</span>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          Real<span style={{ color: "red" }}>Estate</span>
+        </Link>
       </div>
 
       <Menu mode="horizontal" className="navbar-menu">
@@ -33,13 +37,17 @@ const TopHeader = () => {
         <Menu.Item key="contact">
           <Link to="/contact">Contact</Link>
         </Menu.Item>
-        <Menu.Item key="agents">
-          <Link to="/agents">Agents</Link>
+        <Menu.Item key="profile">
+          {isAuthenticated && <Link to="/profile">Profile</Link>}
         </Menu.Item>
       </Menu>
 
-      <Button type="primary" className="login-button">
-        Login
+      <Button
+        type="primary"
+        className="login-button"
+        // onClick={() => (isAuthenticated ? logout(navigate) : login(navigate))}
+      >
+        <Link to="/login"> {isAuthenticated ? "Logout" : "Login"}</Link>
       </Button>
 
       <Button
@@ -72,16 +80,16 @@ const TopHeader = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="agents">
-            <Link to="/agents" onClick={onClose}>
-              Agents
-            </Link>
+            {isAuthenticated && <Link to="/profile">Profile</Link>}
           </Menu.Item>
           <Button
             type="primary"
             className="drawer-login-button"
-            onClick={onClose}
+            // onClick={() =>
+            //   isAuthenticated ? logout(navigate) : login(navigate)
+            // }
           >
-            Login
+            {isAuthenticated ? "Logout" : "Login"}
           </Button>
         </Menu>
       </Drawer>
