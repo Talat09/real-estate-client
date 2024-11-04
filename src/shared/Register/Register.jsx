@@ -1,16 +1,53 @@
 import { Form, Input, Button, Typography, Card, Row, Col } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image1 from "../../assets/login/register.jpg";
+// import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const { Title, Text } = Typography;
 
 const Register = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const resetForm = () => {
+    form.resetFields();
+  };
+  const handleRegistration = async (values) => {
+    const { username, email, password } = values;
+    const user = { username, email, password };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/V1/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success("Registration successful!");
+        console.log("Registration successful:", data);
+        navigate("/login");
+        resetForm(); // Call reset function here
+      } else {
+        console.error("Failed:", response.statusText);
+        toast.error("Registration failed!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred: " + error.message);
+    }
   };
 
   return (
     <div style={styles.container}>
+      <Toaster position="top-center" reverseOrder={false} />{" "}
+      {/* Toast configuration */}
       <Row style={styles.row} gutter={16}>
         {/* Image Column */}
         <Col
@@ -22,7 +59,7 @@ const Register = () => {
         >
           <div style={styles.imageContainer}>
             <img
-              src={image1} // Example Unsplash URL
+              src={image1}
               alt="Register Illustration"
               style={styles.image}
             />
@@ -37,8 +74,9 @@ const Register = () => {
             </Title>
             <Text type="secondary">Please fill in the details below</Text>
             <Form
+              form={form} // Pass the form instance here
               name="register"
-              onFinish={onFinish}
+              onFinish={handleRegistration}
               style={styles.form}
               initialValues={{}}
             >
@@ -154,7 +192,6 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
     marginBottom: "30px",
   },
   imageContainer: {

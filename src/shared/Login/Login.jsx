@@ -9,17 +9,37 @@ import {
   Col,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import image1 from "../../assets/login/login.jpg";
+import toast, { Toaster } from "react-hot-toast";
+import { useAuth } from "../../context/AuthProvider";
 const { Title, Text } = Typography;
 
 const Login = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const { login } = useAuth(); // Get login from AuthContext
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const resetForm = () => {
+    form.resetFields();
+  };
+  const handleLogin = async (values) => {
+    const { username, password } = values;
+    const user = { username, password };
+    console.log("user", user);
+
+    try {
+      await login(user, navigate); // Call login from context
+      toast.success("Login successful!");
+      resetForm(); // Call reset function here
+    } catch (error) {
+      console.error("Error during login:", error);
+      toast.error("Login failed!");
+    }
   };
 
   return (
     <div style={styles.container}>
+      <Toaster position="top-center" reverseOrder={false} />{" "}
       <Row style={styles.row} gutter={16}>
         {/* Login Form Column */}
         <Col xs={24} md={12} style={styles.col}>
@@ -29,8 +49,9 @@ const Login = () => {
             </Title>
             <Text type="secondary">Please login to your account</Text>
             <Form
+              form={form}
               name="login"
-              onFinish={onFinish}
+              onFinish={handleLogin}
               style={styles.form}
               initialValues={{ remember: true }}
             >
